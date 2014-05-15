@@ -24,13 +24,23 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    slim: {
+      dist: {
+        files: {
+          './app/index.html': './app/index.slim',
+//          '../public/500.html': '../public/500.slim',
+//          './app/views/main.html': './app/views/main.slim'
+        }
+      }
+    },
+
     // Project settings
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
       // rails angular proxy setting
       // dist: 'dist'
-      dist: '..public'
+      dist: '../public'
     },
 
     // Watches files for changes and runs tasks based on the changed files
@@ -88,13 +98,13 @@ module.exports = function (grunt) {
         }
       },
       proxies: [
-       {
-         context: '/api',
-         host: 'localhost',
-         port: '3000',
-         https: false,
-   changeOrigin: false
-       }
+        {
+          context: '/api',
+          host: 'localhost',
+          port: '3000',
+          https: false,
+          changeOrigin: false
+        }
       ],
       test: {
         options: {
@@ -414,6 +424,9 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-slim');
+
+  grunt.registerTask('default', ['jshint', 'slim']);
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
